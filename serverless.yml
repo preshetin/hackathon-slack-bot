@@ -1,4 +1,4 @@
-service: serverless-bolt-js
+service: hackathon-slack-bot
 frameworkVersion: '2'
 provider:
   name: aws

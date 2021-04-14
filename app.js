@@ -1,5 +1,8 @@
 const { App, ExpressReceiver } = require('@slack/bolt');
 const serverlessExpress = require('@vendia/serverless-express');
+const handleSoloParticipantModalSubmit = require('./handleSoloParticipantModalSubmit');
+const messageOnTeamJoin = require('./messageOnTeamJoin');
+const soloParticipantModal = require('./soloParticipantModal');
 
 // Initialize your custom receiver
 const expressReceiver = new ExpressReceiver({
@@ -19,35 +22,26 @@ const app = new App({
 
 // Listens to incoming messages that contain "hello"
 app.message('hello', async ({ message, say }) => {
-  // say() sends a message to the channel where the event was triggered
-  await say({
-    blocks: [
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": `Hey there <@${message.user}>!`
-        },
-        "accessory": {
-          "type": "button",
-          "text": {
-            "type": "plain_text",
-            "text": "Click Me"
-          },
-          "action_id": "button_click"
-        }
-      }
-    ],
-    text: `Hey there <@${message.user}>!`
-  });
+  await say( messageOnTeamJoin(message));
 });
 
-// Listens for an action from a button click
-app.action('button_click', async ({ body, ack, say }) => {
-  await say(`<@${body.user.id}> clicked the button`);
+app.view('solo-participant-modal-submit', async ({ client, payload, body, ack }) => {
+  await handleSoloParticipantModalSubmit({client, payload, body, ack });
+});
 
-  // Acknowledge the action after say() to exit the Lambda process
+app.action('solo-participant-modal-open', async ({ client, body, ack, say }) => {
+  // await say(`<@${body.user.id}> clicked the button`);
   await ack();
+  try {
+    const result = await client.views.open({
+      trigger_id: body.trigger_id,
+      view: soloParticipantModal()
+    });
+    console.log(result);
+  }
+  catch (error) {
+    console.error(error);
+  }
 });
 
 // Listens to incoming messages that contain "goodbye"
