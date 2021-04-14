@@ -24,7 +24,7 @@ function messageOnTeamJoin({ slackUid }) {
               text: ":bulb: I have an idea",
               emoji: true,
             },
-            action_id: "idead-author-modal-open",
+            action_id: "IdeaAuthorModalOpen",
             value: "click_me_123",
           },
           {
@@ -34,7 +34,7 @@ function messageOnTeamJoin({ slackUid }) {
               text: ":alien: I'm looking for team",
               emoji: true,
             },
-            action_id: "solo-participant-modal-open",
+            action_id: "SoloParticipantModalOpen",
             value: "click_me_123",
           },
         ],

@@ -1,6 +1,8 @@
 const { App, ExpressReceiver } = require("@slack/bolt");
 const serverlessExpress = require("@vendia/serverless-express");
+const handleIdeaAuthorModalSubmit = require("./handleIdeaAuthorModalSubmit");
 const handleSoloParticipantModalSubmit = require("./handleSoloParticipantModalSubmit");
+const ideaAuthorModal = require("./ideaAuthorModal");
 const messageOnTeamJoin = require("./messageOnTeamJoin");
 const soloParticipantModal = require("./soloParticipantModal");
 
@@ -35,28 +37,40 @@ app.message("hello", async ({ client, body }) => {
   }
 });
 
+app.action("SoloParticipantModalOpen", async ({ client, body, ack }) => {
+  await ack();
+  try {
+    await client.views.open({
+      trigger_id: body.trigger_id,
+      view: soloParticipantModal(),
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 app.view(
-  "solo-participant-modal-submit",
+  "SoloParticipantModalSubmit",
   async ({ client, payload, body, ack }) => {
     await handleSoloParticipantModalSubmit({ client, payload, body, ack });
   }
 );
 
-app.action(
-  "solo-participant-modal-open",
-  async ({ client, body, ack, say }) => {
-    await ack();
-    try {
-      const result = await client.views.open({
-        trigger_id: body.trigger_id,
-        view: soloParticipantModal(),
-      });
-      console.log(result);
-    } catch (error) {
-      console.error(error);
-    }
+app.action("IdeaAuthorModalOpen", async ({ client, body, ack }) => {
+  await ack();
+  try {
+    await client.views.open({
+      trigger_id: body.trigger_id,
+      view: ideaAuthorModal(),
+    });
+  } catch (error) {
+    console.error(error);
   }
-);
+});
+
+app.view("IdeaAuthorModalSubmit", async ({ client, payload, body, ack }) => {
+  await handleIdeaAuthorModalSubmit({ client, payload, body, ack });
+});
 
 // Handle the Lambda function event
 module.exports.handler = serverlessExpress({

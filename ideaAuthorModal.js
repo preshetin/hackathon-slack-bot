@@ -1,22 +1,22 @@
 const SKILLS = require("./utils").SKILLS;
 
-function soloParticipantModal() {
+function ideaAuthorModal() {
   return {
-    callback_id: "SoloParticipantModalSubmit",
+    callback_id: "IdeaAuthorModalSubmit",
     title: {
       type: "plain_text",
-      text: "Solo Participant",
+      text: "Idea Registration",
       emoji: true,
     },
     submit: {
       type: "plain_text",
-      text: "Отправить",
+      text: "Submit",
       emoji: true,
     },
     type: "modal",
     close: {
       type: "plain_text",
-      text: "Отмена",
+      text: "Cancel",
       emoji: true,
     },
     blocks: [
@@ -25,15 +25,30 @@ function soloParticipantModal() {
         text: {
           type: "mrkdwn",
           text:
-            "Если у вас нет идеи и команды, то зарегистрируйтесь на хакатон как соло-участник, мы поможем вам найти команду.",
+            "Если у вас есть идея и команда или есть идея но нет команды, то зарегистрируйте на хакатон себя, (свою команду) и идею для участия.",
         },
       },
       {
         type: "divider",
       },
+
       {
         type: "input",
-        block_id: "experience",
+        block_id: "teamName",
+        element: {
+          type: "plain_text_input",
+          action_id: "plain_text_input-action",
+        },
+        label: {
+          type: "plain_text",
+          text: "Название команды",
+          emoji: true,
+        },
+      },
+
+      {
+        type: "input",
+        block_id: "ideaDescription",
         element: {
           type: "plain_text_input",
           multiline: true,
@@ -41,10 +56,11 @@ function soloParticipantModal() {
         },
         label: {
           type: "plain_text",
-          text: "Какая у вас экспертиза и опыт",
+          text: "Describe your idea",
           emoji: true,
         },
       },
+
       {
         type: "input",
         block_id: "skills",
@@ -52,7 +68,7 @@ function soloParticipantModal() {
           type: "multi_static_select",
           placeholder: {
             type: "plain_text",
-            text: "Choose your skills",
+            text: "Select skills you are looking for",
             emoji: true,
           },
           options: SKILLS.map((skill) => ({
@@ -67,10 +83,11 @@ function soloParticipantModal() {
         },
         label: {
           type: "plain_text",
-          text: "Your skills",
+          text: "Skills you are looking for",
           emoji: true,
         },
       },
+
       {
         type: "input",
         block_id: "phoneOrTelegramUsername",
@@ -80,7 +97,7 @@ function soloParticipantModal() {
         },
         label: {
           type: "plain_text",
-          text: "Телефон / телеграм",
+          text: "Phone or Telegram Username",
           emoji: true,
         },
       },
@@ -88,4 +105,4 @@ function soloParticipantModal() {
   };
 }
 
-module.exports = soloParticipantModal;
+module.exports = ideaAuthorModal;

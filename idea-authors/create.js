@@ -8,7 +8,7 @@ async function main(sk, data = {}) {
     Item: {
       ...data,
       userId: "someUserId",
-      sk,
+      sk: "idea-author__" + sk,
       createdAt: Date.now(),
     },
   };
