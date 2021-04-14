@@ -1,9 +1,11 @@
+const SKILLS = require("./utils").SKILLS;
+
 function soloParticipantModal() {
   return {
     callback_id: "solo-participant-modal-submit",
     title: {
       type: "plain_text",
-      text: "Анкета соло-участника",
+      text: "Solo Participant",
       emoji: true,
     },
     submit: {
@@ -31,50 +33,6 @@ function soloParticipantModal() {
       },
       {
         type: "input",
-        block_id: "skills",
-        element: {
-          type: "multi_static_select",
-          placeholder: {
-            type: "plain_text",
-            text: "Выберите ваушу роль",
-            emoji: true,
-          },
-          options: [
-            {
-              text: {
-                type: "plain_text",
-                text: "programmer",
-                emoji: true,
-              },
-              value: "programmer",
-            },
-            {
-              text: {
-                type: "plain_text",
-                text: "designer",
-                emoji: true,
-              },
-              value: "designer",
-            },
-            {
-              text: {
-                type: "plain_text",
-                text: "marketer",
-                emoji: true,
-              },
-              value: "marketer",
-            },
-          ],
-          action_id: "static_select-action",
-        },
-        label: {
-          type: "plain_text",
-          text: "Роль на хакатоне",
-          emoji: true,
-        },
-      },
-      {
-        type: "input",
         block_id: "description",
         element: {
           type: "plain_text_input",
@@ -84,6 +42,32 @@ function soloParticipantModal() {
         label: {
           type: "plain_text",
           text: "Какая у вас экспертиза и опыт",
+          emoji: true,
+        },
+      },
+      {
+        type: "input",
+        block_id: "skills",
+        element: {
+          type: "multi_static_select",
+          placeholder: {
+            type: "plain_text",
+            text: "Choose your skills",
+            emoji: true,
+          },
+          options: SKILLS.map((skill) => ({
+            text: {
+              type: "plain_text",
+              text: skill.title,
+              emoji: true,
+            },
+            value: skill.id,
+          })),
+          action_id: "static_select-action",
+        },
+        label: {
+          type: "plain_text",
+          text: "Your skills",
           emoji: true,
         },
       },

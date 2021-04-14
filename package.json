@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "prettify": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "MIT",
@@ -13,6 +14,7 @@
     "@vendia/serverless-express": "^4.3.2"
   },
   "devDependencies": {
+    "prettier": "^2.2.1",
     "serverless": "^2.13.0",
     "serverless-offline": "^6.8.0"
   }

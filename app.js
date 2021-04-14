@@ -21,8 +21,18 @@ const app = new App({
 });
 
 // Listens to incoming messages that contain "hello"
-app.message("hello", async ({ message, say }) => {
-  await say(messageOnTeamJoin(message));
+app.message("hello", async ({ client, body }) => {
+  console.log("body", body);
+  const slackUid = body.event.user;
+  try {
+    await client.chat.postMessage({
+      token: process.env.SLACK_BOT_TOKEN,
+      channel: slackUid,
+      ...messageOnTeamJoin({ slackUid }),
+    });
+  } catch (err) {
+    console.log(`ERROR: `, err);
+  }
 });
 
 app.view(

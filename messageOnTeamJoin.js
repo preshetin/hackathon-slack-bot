@@ -1,13 +1,14 @@
-function messageOnTeamJoin(message) {
+function messageOnTeamJoin({ slackUid }) {
+  const text = `:wave: Welcome <@${slackUid}> to *Eco Hackathon*! Please choose below :point_down: how are you planning to participate. Or even choose both!`;
+
   return {
-    text: `:wave: Welcome <@${message.user}> to Hachaton! Please choose how are you planning to participate`,
+    text,
     blocks: [
       {
         type: "section",
         text: {
           type: "mrkdwn",
-          text:
-            ":wave: Welcome to Hachaton! Please choose how are you planning to participate",
+          text,
         },
       },
       {
@@ -20,7 +21,7 @@ function messageOnTeamJoin(message) {
             type: "button",
             text: {
               type: "plain_text",
-              text: "Idea author",
+              text: ":bulb: I have an idea",
               emoji: true,
             },
             action_id: "idead-author-modal-open",
@@ -30,7 +31,7 @@ function messageOnTeamJoin(message) {
             type: "button",
             text: {
               type: "plain_text",
-              text: "Solo-participant",
+              text: ":alien: I'm looking for team",
               emoji: true,
             },
             action_id: "solo-participant-modal-open",
