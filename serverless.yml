@@ -1,5 +1,5 @@
 service: hackathon-slack-bot
-frameworkVersion: '2'
+frameworkVersion: "2"
 provider:
   name: aws
   runtime: nodejs12.x
