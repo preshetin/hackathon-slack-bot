@@ -45,7 +45,6 @@ app.view(
 app.action(
   "solo-participant-modal-open",
   async ({ client, body, ack, say }) => {
-    // await say(`<@${body.user.id}> clicked the button`);
     await ack();
     try {
       const result = await client.views.open({
@@ -58,12 +57,6 @@ app.action(
     }
   }
 );
-
-// Listens to incoming messages that contain "goodbye"
-app.message("goodbye", async ({ message, say }) => {
-  // say() sends a message to the channel where the event was triggered
-  await say(`See ya later, <@${message.user}> :wave:`);
-});
 
 // Handle the Lambda function event
 module.exports.handler = serverlessExpress({
