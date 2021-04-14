@@ -31,6 +31,7 @@ function soloParticipantModal() {
       },
       {
         type: "input",
+        block_id: "skills",
         element: {
           type: "multi_static_select",
           placeholder: {
@@ -42,26 +43,26 @@ function soloParticipantModal() {
             {
               text: {
                 type: "plain_text",
-                text: "программист",
+                text: "programmer",
                 emoji: true,
               },
-              value: "value-0",
+              value: "programmer",
             },
             {
               text: {
                 type: "plain_text",
-                text: "дизайнер",
+                text: "designer",
                 emoji: true,
               },
-              value: "value-1",
+              value: "designer",
             },
             {
               text: {
                 type: "plain_text",
-                text: "маркетолог",
+                text: "marketer",
                 emoji: true,
               },
-              value: "value-2",
+              value: "marketer",
             },
           ],
           action_id: "static_select-action",
@@ -74,6 +75,7 @@ function soloParticipantModal() {
       },
       {
         type: "input",
+        block_id: "description",
         element: {
           type: "plain_text_input",
           multiline: true,
@@ -87,6 +89,7 @@ function soloParticipantModal() {
       },
       {
         type: "input",
+        block_id: "contacts",
         element: {
           type: "plain_text_input",
           action_id: "plain_text_input-action",
