@@ -1,9 +1,12 @@
 # node / npm
 node_modules/
-package-lock.json
+yarn.lock
 
 # macOS
 .DS_Store
+
+#vim
+*.swp
 
 # Serverless
 .serverless/
