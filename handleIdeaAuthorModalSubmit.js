@@ -1,5 +1,6 @@
 const ideaAuthorsCreate = require("./idea-authors/create").main;
 const sendMessageWithMatchingSoloParticipants = require("./sendMessageWithMatchingSoloParticipants");
+const notifySoloParticipantsLookingForMatchedSkills = require("./notifySoloParticipantsLookingForMatchedSkills")
 
 async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
   await ack();
@@ -25,6 +26,12 @@ async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
     console.log("response for ideaAuthorsCreate", res);
 
     await sendMessageWithMatchingSoloParticipants({ client, slackUid, skills });
+
+    const newParticipant = { ...createData, slackUid };
+    await notifySoloParticipantsLookingForMatchedSkills({
+      client,
+      newParticipant,
+    });
 
     // TODO: Post to some public channel that a new solo participant joined
 
