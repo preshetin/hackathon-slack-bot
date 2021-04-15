@@ -22,6 +22,35 @@ const app = new App({
   receiver: expressReceiver,
 });
 
+app.event('team_join', async ({ event, client }) => {
+  try {
+    const slackUid = event.user;
+    await client.chat.postMessage({
+      token: process.env.SLACK_BOT_TOKEN,
+      channel: slackUid,
+      ...messageOnTeamJoin({ slackUid }),
+    });
+  }
+  catch (error) {
+    console.error(error);
+  }
+});
+
+app.command('/register', async ({ client, command, ack, body }) => {
+  await ack();
+  try {
+    const slackUid = body.user_id;
+    await client.chat.postMessage({
+      token: process.env.SLACK_BOT_TOKEN,
+      channel: slackUid,
+      ...messageOnTeamJoin({ slackUid }),
+    });
+  }
+  catch (error) {
+    console.error(error);
+  }
+});
+
 // Listens to incoming messages that contain "hello"
 app.message("hello", async ({ client, body }) => {
   console.log("body", body);
