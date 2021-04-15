@@ -44,7 +44,12 @@ const SKILLS = [
 ];
 
 // lookingFor: 'idea-author' | 'solo-participant'
-const matchingParticipants = ({ skills, participants, lookingFor }) => {
+const matchingParticipants = ({
+  skills,
+  participants,
+  excludeSlackUid,
+  lookingFor,
+}) => {
   return participants
     .map((participant) => ({
       ...participant,
@@ -52,7 +57,9 @@ const matchingParticipants = ({ skills, participants, lookingFor }) => {
     }))
     .filter(
       (participant) =>
-        participant.matchedSkills.length > 0 && participant.role === lookingFor
+        participant.matchedSkills.length > 0 &&
+        participant.role === lookingFor &&
+        excludeSlackUid !== participant.slackUid
     );
 };
 

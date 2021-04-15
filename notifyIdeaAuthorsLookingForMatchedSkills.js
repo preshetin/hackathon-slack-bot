@@ -16,6 +16,7 @@ async function notifyIdeaAuthorsLookingForMatchedSkills({
 
   const matchingIdeaAuthorParticipants = matchingParticipants({
     skills: newSoloParticipant.skills,
+    excludeSlackUid: newSoloParticipant.slackUid,
     participants,
     lookingFor: "idea-author",
   });

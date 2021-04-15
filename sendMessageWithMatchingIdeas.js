@@ -18,12 +18,13 @@ async function sendMessageWithMatchingIdeas({ client, slackUid, skills }) {
   const matchingIdeaAuthorParticipants = matchingParticipants({
     skills,
     participants,
+    excludeSlackUid: slackUid,
     lookingFor: "idea-author",
   });
 
   console.log("matchingIdeaAuthorParticipants", matchingIdeaAuthorParticipants);
 
-  const text = buildText({ matchingIdeaAuthorParticipants });
+  const text = buildText({ matchingIdeaAuthorParticipants, skills });
 
   console.log("text to be sent", text);
 
@@ -34,12 +35,19 @@ async function sendMessageWithMatchingIdeas({ client, slackUid, skills }) {
   });
 }
 
-const buildText = ({ matchingIdeaAuthorParticipants }) => {
-  let result = `Got it! You are now registered as solo participant.`;
+const buildText = ({ matchingIdeaAuthorParticipants, skills }) => {
+  let result = `Got it!`;
 
-  if (matchingIdeaAuthorParticipants.length === 0) return result;
+  if (matchingIdeaAuthorParticipants.length === 0) {
+    const skillsList = skills
+      .map((skill) => SKILLS.find((s) => s.id === skill))
+      .map((s) => "_" + s.title + "_")
+      .join(", ");
+    result += ` I'll let you know when someone would post a project where your ${skillsList} skills would be useful :raised_hands:`;
+    return result;
+  }
 
-  result += " Check out ideas :bulb: matching your skills:\n";
+  result += " Check out projects matching your skills:\n\n";
 
   for (let author of matchingIdeaAuthorParticipants) {
     const skillsList = author.matchedSkills
@@ -47,7 +55,7 @@ const buildText = ({ matchingIdeaAuthorParticipants }) => {
       .map((s) => "_" + s.title + "_")
       .join(", ");
 
-    result += ` ● At *${author.teamName}*, <@${author.slackUid}> is looking for folks with ${skillsList} skills. Here's more on that: \`\`\`${author.ideaDescription}\`\`\`\n`;
+    result += ` :bulb: *${author.teamName}* project created by <@${author.slackUid}> is looking for folks with ${skillsList} skills. Here's more on that: \`\`\`${author.ideaDescription}\`\`\`\n\n`;
   }
 
   result +=

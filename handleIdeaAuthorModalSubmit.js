@@ -1,4 +1,5 @@
 const ideaAuthorsCreate = require("./idea-authors/create").main;
+const sendMessageWithMatchingSoloParticipants = require("./sendMessageWithMatchingSoloParticipants");
 
 async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
   await ack();
@@ -23,11 +24,7 @@ async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
     const res = await ideaAuthorsCreate(slackUid, createData);
     console.log("response for ideaAuthorsCreate", res);
 
-    await client.chat.postMessage({
-      token: process.env.SLACK_BOT_TOKEN,
-      channel: body.user.id,
-      text: `You've sussessfully registered your idea! Good luck <@${body.user.id}>! :raised_hands:`,
-    });
+    await sendMessageWithMatchingSoloParticipants({ client, slackUid, skills });
 
     // TODO: Post to some public channel that a new solo participant joined
 
