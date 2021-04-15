@@ -1,4 +1,5 @@
 const soloParticipatsCreate = require("./solo-participants/create").main;
+const sendMessageWithMatchingIdeas = require("./sendMessageWithMatchingIdeas");
 
 async function handleSoloParticipantModalSubmit({ client, body, ack }) {
   await ack();
@@ -22,12 +23,7 @@ async function handleSoloParticipantModalSubmit({ client, body, ack }) {
     const res = await soloParticipatsCreate(slackUid, createData);
     console.log("response for soloParticipatsCreate create", res);
 
-    await client.chat.postMessage({
-      token: process.env.SLACK_BOT_TOKEN,
-      channel: body.user.id,
-      text: `Got it! Thanks <@${body.user.id}>! :raised_hands:`,
-      blocks: [],
-    });
+    await sendMessageWithMatchingIdeas({ client, slackUid, skills });
 
     // TODO: Post to some public channel that a new solo participant joined
 

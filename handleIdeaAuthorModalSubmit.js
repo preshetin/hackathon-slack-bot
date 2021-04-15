@@ -23,17 +23,9 @@ async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
     const res = await ideaAuthorsCreate(slackUid, createData);
     console.log("response for ideaAuthorsCreate", res);
 
-    await client.chat.postMessage({
-      token: process.env.SLACK_BOT_TOKEN,
-      channel: body.user.id,
-      text: `You've sussessfully registered your idea! Good luck <@${body.user.id}>! :raised_hands:`,
-    });
-
     // TODO: Post to some public channel that a new solo participant joined
 
     // TODO: if we have idea owners that need solo participant's skill, then send them a message proposing to contact participant
-
-    // TODO: say() participant with ideas that look for his or her skills
   } catch (error) {
     console.error("ERROR:", error);
   }

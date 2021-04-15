@@ -28,19 +28,20 @@ custom:
   participantsTableName: ${self:custom.stage}-participants-hackathon-slack-bot
 
 functions:
-  # not used currenlty, was created for testing locally
+  # Functions without events are not used currenlty and were
+  # created for testing locally
   participantsCreate:
     handler: participants/create.main
-    events:
-      - http:
-          path: participants
-          method: post
+  participantsScan:
+    handler: db/scan.main
+
   slack:
     handler: app.handler
     events:
       - http:
           path: slack/events
           method: post
+
 plugins:
   - serverless-offline
 
