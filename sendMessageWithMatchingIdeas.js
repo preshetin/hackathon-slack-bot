@@ -1,5 +1,6 @@
 const scan = require("./db/scan").main;
 const SKILLS = require("./utils").SKILLS;
+const matchingParticipants = require('./utils').matchingParticipants
 
 async function sendMessageWithMatchingIdeas({ client, slackUid, skills }) {
   const participantsScan = await scan();
@@ -33,25 +34,13 @@ async function sendMessageWithMatchingIdeas({ client, slackUid, skills }) {
   });
 }
 
-// lookingFor: 'idea-author' | 'solo-participant'
-const matchingParticipants = ({ skills, participants, lookingFor }) => {
-  return participants
-    .map((participant) => ({
-      ...participant,
-      matchedSkills: skills.filter((v) => participant.skills.includes(v)),
-    }))
-    .filter(
-      (participant) =>
-        participant.matchedSkills.length > 0 && participant.role === lookingFor
-    );
-};
 
 const buildText = ({ matchingIdeaAuthorParticipants }) => {
   let result = `Got it! You are now registered as solo participant.`;
 
   if (matchingIdeaAuthorParticipants.length === 0) return result;
 
-  result += " Check out ideas matching your skills:\n";
+  result += " Check out ideas :bulb: matching your skills:\n";
 
   for (let author of matchingIdeaAuthorParticipants) {
     const skillsList = author.matchedSkills
@@ -59,7 +48,6 @@ const buildText = ({ matchingIdeaAuthorParticipants }) => {
       .map((s) => "_" + s.title + "_")
       .join(", ");
 
-    result += ` ● At *${author.teamName}*, <@${author.slackUid}> is looking for folks with ${skillsList} skills. Here's more on that: \`\`\`${author.ideaDescription}\`\`\`\n`;
     result += ` ● At *${author.teamName}*, <@${author.slackUid}> is looking for folks with ${skillsList} skills. Here's more on that: \`\`\`${author.ideaDescription}\`\`\`\n`;
   }
 

@@ -1,12 +1,10 @@
 const soloParticipatsCreate = require("./solo-participants/create").main;
 const sendMessageWithMatchingIdeas = require("./sendMessageWithMatchingIdeas");
+const notifyIdeaAuthorsLookingForMatchedSkills = require('./notifyIdeaAuthorsLookingForMatchedSkills')
 
 async function handleSoloParticipantModalSubmit({ client, body, ack }) {
   await ack();
   try {
-    console.log("handling modal submit....");
-    console.log("body", body, body.view.state.values);
-
     const slackUid = body.user.id;
 
     const values = body.view.state.values;
@@ -20,16 +18,14 @@ async function handleSoloParticipantModalSubmit({ client, body, ack }) {
         values.phoneOrTelegramUsername["plain_text_input-action"].value,
     };
 
-    const res = await soloParticipatsCreate(slackUid, createData);
-    console.log("response for soloParticipatsCreate create", res);
+    await soloParticipatsCreate(slackUid, createData);
 
     await sendMessageWithMatchingIdeas({ client, slackUid, skills });
 
+    const newSoloParticipant = { ...createData, slackUid }
+    await notifyIdeaAuthorsLookingForMatchedSkills({client, newSoloParticipant });
+
     // TODO: Post to some public channel that a new solo participant joined
-
-    // TODO: if we have idea owners that need solo participant's skill, then send them a message proposing to contact participant
-
-    // TODO: say() participant with ideas that look for his or her skills
   } catch (error) {
     console.error(error);
   }

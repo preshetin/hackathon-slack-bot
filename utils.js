@@ -43,6 +43,21 @@ const SKILLS = [
   // },
 ];
 
+// lookingFor: 'idea-author' | 'solo-participant'
+const matchingParticipants = ({ skills, participants, lookingFor }) => {
+  return participants
+    .map((participant) => ({
+      ...participant,
+      matchedSkills: skills.filter((v) => participant.skills.includes(v)),
+    }))
+    .filter(
+      (participant) =>
+        participant.matchedSkills.length > 0 && participant.role === lookingFor
+    );
+};
+
 module.exports = {
   SKILLS,
+  matchingParticipants,
 };
+
