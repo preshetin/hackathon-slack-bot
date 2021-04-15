@@ -14,27 +14,27 @@ async function notifyIdeaAuthorsLookingForMatchedSkills({
     slackUid: item.sk.split("__")[1],
   }));
 
-  const matchingIdeaAuthorParticipants = matchingParticipants({
+  const participantsToBeNotified = matchingParticipants({
     skills: newParticipant.skills,
     excludeSlackUid: newParticipant.slackUid,
     participants,
     lookingFor: "idea-author",
   });
 
-  for (let matchingIdeaAuthor of matchingIdeaAuthorParticipants) {
-    const text = buildText({ matchingIdeaAuthor, newParticipant });
+  for (let participantToBeNotified of participantsToBeNotified) {
+    const text = buildText({ participantToBeNotified, newParticipant });
     console.log("text to be sent", text);
 
     await client.chat.postMessage({
       token: process.env.SLACK_BOT_TOKEN,
-      channel: matchingIdeaAuthor.slackUid,
+      channel: participantToBeNotified.slackUid,
       text,
     });
   }
 }
 
-const buildText = ({ matchingIdeaAuthor, newParticipant }) => {
-  const skillsList = matchingIdeaAuthor.matchedSkills
+const buildText = ({ participantToBeNotified, newParticipant }) => {
+  const skillsList = participantToBeNotified.matchedSkills
     .map((skill) => SKILLS.find((s) => s.id === skill))
     .map((s) => "_" + s.title + "_")
     .join(", ");
