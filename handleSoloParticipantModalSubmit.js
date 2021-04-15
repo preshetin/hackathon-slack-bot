@@ -1,6 +1,6 @@
 const soloParticipatsCreate = require("./solo-participants/create").main;
 const sendMessageWithMatchingIdeas = require("./sendMessageWithMatchingIdeas");
-const notifyIdeaAuthorsLookingForMatchedSkills = require('./notifyIdeaAuthorsLookingForMatchedSkills')
+const notifyIdeaAuthorsLookingForMatchedSkills = require("./notifyIdeaAuthorsLookingForMatchedSkills");
 
 async function handleSoloParticipantModalSubmit({ client, body, ack }) {
   await ack();
@@ -22,8 +22,11 @@ async function handleSoloParticipantModalSubmit({ client, body, ack }) {
 
     await sendMessageWithMatchingIdeas({ client, slackUid, skills });
 
-    const newSoloParticipant = { ...createData, slackUid }
-    await notifyIdeaAuthorsLookingForMatchedSkills({client, newSoloParticipant });
+    const newSoloParticipant = { ...createData, slackUid };
+    await notifyIdeaAuthorsLookingForMatchedSkills({
+      client,
+      newSoloParticipant,
+    });
 
     // TODO: Post to some public channel that a new solo participant joined
   } catch (error) {

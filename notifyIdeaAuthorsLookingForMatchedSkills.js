@@ -1,8 +1,11 @@
 const scan = require("./db/scan").main;
 const SKILLS = require("./utils").SKILLS;
-const matchingParticipants = require('./utils').matchingParticipants
+const matchingParticipants = require("./utils").matchingParticipants;
 
-async function notifyIdeaAuthorsLookingForMatchedSkills({ client, newSoloParticipant }) {
+async function notifyIdeaAuthorsLookingForMatchedSkills({
+  client,
+  newSoloParticipant,
+}) {
   const participantsScan = await scan();
 
   const participants = participantsScan.Items.map((item) => ({
@@ -37,7 +40,7 @@ const buildText = ({ matchingIdeaAuthor, newSoloParticipant }) => {
 
   let result = `Hey! Someone :alien: with ${skillsList} skills that you're looking for has just joined. Here's more details: \`\`\`${newSoloParticipant.experience}\`\`\`\n`;
 
-  result += `That folk's username is <@${newSoloParticipant.slackUid}> so if you feel this is a good fit send him or her a message!`
+  result += `That folk's username is <@${newSoloParticipant.slackUid}> so if you feel this is a good fit send him or her a message!`;
 
   return result;
 };

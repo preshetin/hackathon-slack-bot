@@ -1,6 +1,6 @@
 const scan = require("./db/scan").main;
 const SKILLS = require("./utils").SKILLS;
-const matchingParticipants = require('./utils').matchingParticipants
+const matchingParticipants = require("./utils").matchingParticipants;
 
 async function sendMessageWithMatchingIdeas({ client, slackUid, skills }) {
   const participantsScan = await scan();
@@ -33,7 +33,6 @@ async function sendMessageWithMatchingIdeas({ client, slackUid, skills }) {
     text,
   });
 }
-
 
 const buildText = ({ matchingIdeaAuthorParticipants }) => {
   let result = `Got it! You are now registered as solo participant.`;
