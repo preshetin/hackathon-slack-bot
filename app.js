@@ -24,7 +24,7 @@ const app = new App({
 
 app.event('team_join', async ({ event, client }) => {
   try {
-    const slackUid = event.user;
+    const slackUid = event.user.id;
     await client.chat.postMessage({
       token: process.env.SLACK_BOT_TOKEN,
       channel: slackUid,
