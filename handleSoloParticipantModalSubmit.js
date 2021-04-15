@@ -22,10 +22,10 @@ async function handleSoloParticipantModalSubmit({ client, body, ack }) {
 
     await sendMessageWithMatchingIdeas({ client, slackUid, skills });
 
-    const newSoloParticipant = { ...createData, slackUid };
+    const newParticipant = { ...createData, slackUid };
     await notifyIdeaAuthorsLookingForMatchedSkills({
       client,
-      newSoloParticipant,
+      newParticipant,
     });
 
     // TODO: Post to some public channel that a new solo participant joined
