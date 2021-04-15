@@ -1,6 +1,6 @@
 const ideaAuthorsCreate = require("./idea-authors/create").main;
 const sendMessageWithMatchingSoloParticipants = require("./sendMessageWithMatchingSoloParticipants");
-const notifySoloParticipantsLookingForMatchedSkills = require("./notifySoloParticipantsLookingForMatchedSkills")
+const notifySoloParticipantsLookingForMatchedSkills = require("./notifySoloParticipantsLookingForMatchedSkills");
 
 async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
   await ack();

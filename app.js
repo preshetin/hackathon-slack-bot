@@ -22,7 +22,7 @@ const app = new App({
   receiver: expressReceiver,
 });
 
-app.event('team_join', async ({ event, client }) => {
+app.event("team_join", async ({ event, client }) => {
   try {
     const slackUid = event.user.id;
     await client.chat.postMessage({
@@ -30,13 +30,12 @@ app.event('team_join', async ({ event, client }) => {
       channel: slackUid,
       ...messageOnTeamJoin({ slackUid }),
     });
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error);
   }
 });
 
-app.command('/register', async ({ client, command, ack, body }) => {
+app.command("/register", async ({ client, command, ack, body }) => {
   await ack();
   try {
     const slackUid = body.user_id;
@@ -45,8 +44,7 @@ app.command('/register', async ({ client, command, ack, body }) => {
       channel: slackUid,
       ...messageOnTeamJoin({ slackUid }),
     });
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error);
   }
 });
