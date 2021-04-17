@@ -34,8 +34,6 @@ async function handleSoloParticipantModalSubmit({ client, body, ack }) {
       type: "solo-participant",
       newParticipant,
     });
-
-    // TODO: Post to some public channel that a new solo participant joined
   } catch (error) {
     console.error("ERROR: ", error);
   }

@@ -10,12 +10,72 @@ const SKILLS = [
     id: "designer",
   },
   {
+    title: "UI/UX",
+    id: "ui-ux",
+  },
+  {
     title: "Marketing Specialist",
     id: "marketing-specialist",
   },
   {
+    title: "Entepreneur",
+    id: "entepreneur",
+  },
+  {
+    title: "Product Owner",
+    id: "product-owner",
+  },
+  {
+    title: "Architector",
+    id: "acthitector",
+  },
+  {
+    title: "Other",
+    id: "other",
+  },
+  {
+    title: "Python",
+    id: "python",
+  },
+  {
+    title: "PHP",
+    id: "php",
+  },
+  {
+    title: "Presentation Skills",
+    id: "presentation-skills",
+  },
+  {
     title: "React.js",
     id: "react-js",
+  },
+  {
+    title: "Business Analyst",
+    id: "business-analyst",
+  },
+  {
+    title: "JavaScript",
+    id: "javascript",
+  },
+  {
+    title: "Node.js",
+    id: "node-js",
+  },
+  {
+    title: "Java",
+    id: "java",
+  },
+  {
+    title: "IOS Developer",
+    id: "ios-developer",
+  },
+  {
+    title: "Android Developer",
+    id: "android-developer",
+  },
+  {
+    title: "Mobile Developer",
+    id: "mobile-developer",
   },
   {
     title: "Vue.js",
@@ -30,8 +90,8 @@ const SKILLS = [
     id: "frontend-developer",
   },
   {
-    title: "ML",
-    id: "ml",
+    title: "Machine Learning",
+    id: "machine-learning",
   },
   {
     title: "Data Scientist",
