@@ -1,6 +1,7 @@
 const soloParticipatsCreate = require("./solo-participants/create").main;
 const sendMessageWithMatchingIdeas = require("./sendMessageWithMatchingIdeas");
 const notifyIdeaAuthorsLookingForMatchedSkills = require("./notifyIdeaAuthorsLookingForMatchedSkills");
+const sendMessageToMatchingChannel = require("./sendMessageToMatchingChannel");
 
 async function handleSoloParticipantModalSubmit({ client, body, ack }) {
   await ack();
@@ -28,9 +29,15 @@ async function handleSoloParticipantModalSubmit({ client, body, ack }) {
       newParticipant,
     });
 
+    await sendMessageToMatchingChannel({
+      client,
+      type: "solo-participant",
+      newParticipant,
+    });
+
     // TODO: Post to some public channel that a new solo participant joined
   } catch (error) {
-    console.error(error);
+    console.error("ERROR: ", error);
   }
 }
 

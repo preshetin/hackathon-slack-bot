@@ -1,6 +1,7 @@
 const ideaAuthorsCreate = require("./idea-authors/create").main;
 const sendMessageWithMatchingSoloParticipants = require("./sendMessageWithMatchingSoloParticipants");
 const notifySoloParticipantsLookingForMatchedSkills = require("./notifySoloParticipantsLookingForMatchedSkills");
+const sendMessageToMatchingChannel = require("./sendMessageToMatchingChannel");
 
 async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
   await ack();
@@ -33,9 +34,11 @@ async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
       newParticipant,
     });
 
-    // TODO: Post to some public channel that a new solo participant joined
-
-    // TODO: if we have idea owners that need solo participant's skill, then send them a message proposing to contact participant
+    await sendMessageToMatchingChannel({
+      client,
+      type: "idea-author",
+      newParticipant,
+    });
   } catch (error) {
     console.error("ERROR:", error);
   }
