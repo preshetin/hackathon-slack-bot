@@ -6,9 +6,6 @@ const sendMessageToMatchingChannel = require("./sendMessageToMatchingChannel");
 async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
   await ack();
   try {
-    console.log("handling modal submit....");
-    console.log("body", body, body.view.state.values);
-
     const slackUid = body.user.id;
 
     const values = body.view.state.values;
@@ -22,7 +19,6 @@ async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
     };
 
     const res = await ideaAuthorsCreate(slackUid, createData);
-    console.log("response for ideaAuthorsCreate", res);
 
     await sendMessageWithMatchingSoloParticipants({ client, slackUid, skills });
 

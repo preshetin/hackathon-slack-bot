@@ -1,4 +1,5 @@
 const { App, ExpressReceiver } = require("@slack/bolt");
+const mixpanel = require("./analytics");
 const serverlessExpress = require("@vendia/serverless-express");
 const handleIdeaAuthorModalSubmit = require("./handleIdeaAuthorModalSubmit");
 const handleSoloParticipantModalSubmit = require("./handleSoloParticipantModalSubmit");
@@ -30,12 +31,19 @@ app.event("team_join", async ({ event, client }) => {
       channel: slackUid,
       ...messageOnTeamJoin({ slackUid }),
     });
+
+    mixpanel.people_set(slackUid, {
+      $first_name: event.user.name,
+      real_name: event.user.real_name,
+      $avatar: event.user.profile.image_192,
+    });
+    mixpanel.track("Team Joined", { distinct_id: slackUid });
   } catch (error) {
     console.error(error);
   }
 });
 
-app.command("/register", async ({ client, command, ack, body }) => {
+app.command("/register", async ({ client, ack, body }) => {
   await ack();
   try {
     const slackUid = body.user_id;
@@ -44,6 +52,7 @@ app.command("/register", async ({ client, command, ack, body }) => {
       channel: slackUid,
       ...messageOnTeamJoin({ slackUid }),
     });
+    mixpanel.track("/register Command Run", { distinct_id: slackUid });
   } catch (error) {
     console.error(error);
   }
@@ -51,7 +60,6 @@ app.command("/register", async ({ client, command, ack, body }) => {
 
 // Listens to incoming messages that contain "hello"
 app.message("hello", async ({ client, body }) => {
-  console.log("body", body);
   const slackUid = body.event.user;
   try {
     await client.chat.postMessage({
@@ -59,6 +67,8 @@ app.message("hello", async ({ client, body }) => {
       channel: slackUid,
       ...messageOnTeamJoin({ slackUid }),
     });
+
+    mixpanel.track("Hello Message to Bot", { distinct_id: slackUid });
   } catch (err) {
     console.log(`ERROR: `, err);
   }
@@ -71,6 +81,9 @@ app.action("SoloParticipantModalOpen", async ({ client, body, ack }) => {
       trigger_id: body.trigger_id,
       view: soloParticipantModal(),
     });
+    mixpanel.track("Solo Participant Modal Open", {
+      distinct_id: body.user.id,
+    });
   } catch (error) {
     console.error(error);
   }
@@ -80,6 +93,9 @@ app.view(
   "SoloParticipantModalSubmit",
   async ({ client, payload, body, ack }) => {
     await handleSoloParticipantModalSubmit({ client, payload, body, ack });
+    mixpanel.track("Solo Participant Modal Submit", {
+      distinct_id: body.user.id,
+    });
   }
 );
 
@@ -90,6 +106,7 @@ app.action("IdeaAuthorModalOpen", async ({ client, body, ack }) => {
       trigger_id: body.trigger_id,
       view: ideaAuthorModal(),
     });
+    mixpanel.track("Idea Author Modal Open", { distinct_id: body.user.id });
   } catch (error) {
     console.error(error);
   }
@@ -97,6 +114,7 @@ app.action("IdeaAuthorModalOpen", async ({ client, body, ack }) => {
 
 app.view("IdeaAuthorModalSubmit", async ({ client, payload, body, ack }) => {
   await handleIdeaAuthorModalSubmit({ client, payload, body, ack });
+  mixpanel.track("Idea Author Modal Submit", { distinct_id: body.user.id });
 });
 
 // Handle the Lambda function event
