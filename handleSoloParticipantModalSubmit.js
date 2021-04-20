@@ -2,8 +2,9 @@ const soloParticipatsCreate = require("./solo-participants/create").main;
 const sendMessageWithMatchingIdeas = require("./sendMessageWithMatchingIdeas");
 const notifyIdeaAuthorsLookingForMatchedSkills = require("./notifyIdeaAuthorsLookingForMatchedSkills");
 const sendMessageToMatchingChannel = require("./sendMessageToMatchingChannel");
-const getPostToMatchinChannelFromValues = require('./utils').getPostToMatchinChannelFromValues;
-const getNewMatchesFromValues = require('./utils').getNewMatchesFromValues;
+const getPostToMatchinChannelFromValues = require("./utils")
+  .getPostToMatchinChannelFromValues;
+const getNewMatchesFromValues = require("./utils").getNewMatchesFromValues;
 
 async function handleSoloParticipantModalSubmit({ client, body, ack }) {
   await ack();
@@ -31,7 +32,7 @@ async function handleSoloParticipantModalSubmit({ client, body, ack }) {
       newParticipant,
     });
 
-    if(createData.postToMatchingChannel) {
+    if (createData.postToMatchingChannel) {
       await sendMessageToMatchingChannel({
         client,
         type: "solo-participant",

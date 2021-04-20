@@ -157,5 +157,5 @@ module.exports = {
   SKILLS,
   matchingParticipants,
   getPostToMatchinChannelFromValues,
-  getNewMatchesFromValues
+  getNewMatchesFromValues,
 };
