@@ -119,7 +119,7 @@ const notificationCheckboxes = () => {
     {
       text: {
         type: "mrkdwn",
-        text: "Post one time announcement about my idea on *#matching* channel",
+        text: "Post announcement about my idea to *#matching* channel",
       },
       value: "postToMatchingChannel",
     },

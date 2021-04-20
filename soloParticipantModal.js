@@ -104,7 +104,7 @@ const notificationOptions = () => {
     {
       text: {
         type: "mrkdwn",
-        text: "Post one time announcement about me on *#matching* channel",
+        text: "Post announcement about my profile to *#matching* channel",
       },
       value: "postToMatchingChannel",
     },
