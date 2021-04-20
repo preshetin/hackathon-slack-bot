@@ -6,9 +6,6 @@ const sendMessageToMatchingChannel = require("./sendMessageToMatchingChannel");
 async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
   await ack();
   try {
-    console.log("handling modal submit....");
-    console.log("body", body, body.view.state.values);
-
     const slackUid = body.user.id;
 
     const values = body.view.state.values;
@@ -19,10 +16,11 @@ async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
       skills,
       teamName: values.teamName["plain_text_input-action"].value,
       ideaDescription: values.ideaDescription["plain_text_input-action"].value,
+      postToMatchingChannel: getPostToMatchinChannelFromValues(values),
+      allowPostingNewMatches: getNewMatchesFromValues(values),
     };
 
     const res = await ideaAuthorsCreate(slackUid, createData);
-    console.log("response for ideaAuthorsCreate", res);
 
     await sendMessageWithMatchingSoloParticipants({ client, slackUid, skills });
 
@@ -41,5 +39,35 @@ async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
     console.error("ERROR:", error);
   }
 }
+
+const getPostToMatchinChannelFromValues = (values) => {
+  if (
+    values &&
+    values.notifications &&
+    values.notifications.notificationCheckboxes &&
+    values.notifications.notificationCheckboxes.selected_options &&
+    values.notifications.notificationCheckboxes.selected_options.some(
+      (el) => el.value === "postToMatchingChannel"
+    )
+  ) {
+    return true;
+  }
+  return false;
+};
+
+const getNewMatchesFromValues = (values) => {
+  if (
+    values &&
+    values.notifications &&
+    values.notifications.notificationCheckboxes &&
+    values.notifications.notificationCheckboxes.selected_options &&
+    values.notifications.notificationCheckboxes.selected_options.some(
+      (el) => el.value === "allowPostingNewMatches"
+    )
+  ) {
+    return true;
+  }
+  return false;
+};
 
 module.exports = handleIdeaAuthorModalSubmit;

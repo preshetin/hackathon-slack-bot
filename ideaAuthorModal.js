@@ -93,8 +93,44 @@ function ideaAuthorModal() {
           },
         ],
       },
+      {
+        type: "divider",
+      },
+      {
+        type: "section",
+        block_id: "notifications",
+        text: {
+          type: "mrkdwn",
+          text: "Configure notifications:",
+        },
+        accessory: {
+          type: "checkboxes",
+          initial_options: notificationCheckboxes(),
+          options: notificationCheckboxes(),
+          action_id: "notificationCheckboxes",
+        },
+      },
     ],
   };
 }
+
+const notificationCheckboxes = () => {
+  return [
+    {
+      text: {
+        type: "mrkdwn",
+        text: "Post one time announcement about my idea on *#matching* channel",
+      },
+      value: "postToMatchingChannel",
+    },
+    {
+      text: {
+        type: "mrkdwn",
+        text: "Notify me about new solo participants with skills I'm looking",
+      },
+      value: "allowPostingNewMatches",
+    },
+  ];
+};
 
 module.exports = ideaAuthorModal;

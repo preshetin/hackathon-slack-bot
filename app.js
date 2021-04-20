@@ -76,6 +76,10 @@ app.action("SoloParticipantModalOpen", async ({ client, body, ack }) => {
   }
 });
 
+app.action("notificationCheckboxes", async ({ client, body, ack }) => {
+  await ack();
+});
+
 app.view(
   "SoloParticipantModalSubmit",
   async ({ client, payload, body, ack }) => {
