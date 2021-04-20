@@ -7,6 +7,7 @@ provider:
     SLACK_SIGNING_SECRET: ${env:SLACK_SIGNING_SECRET}
     SLACK_BOT_TOKEN: ${env:SLACK_BOT_TOKEN}
     MATCHING_CHANNEL_ID: ${env:MATCHING_CHANNEL_ID}
+    MIXPANEL_PROJECT_TOKEN: ${env:MIXPANEL_PROJECT_TOKEN}
     participantsTableName: ${self:custom.participantsTableName}
   iamRoleStatements:
     - Effect: Allow
