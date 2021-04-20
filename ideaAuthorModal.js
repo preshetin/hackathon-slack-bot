@@ -6,18 +6,15 @@ function ideaAuthorModal() {
     title: {
       type: "plain_text",
       text: "Idea Registration",
-      emoji: true,
     },
     submit: {
       type: "plain_text",
-      text: "Submit",
-      emoji: true,
+      text: "Register",
     },
     type: "modal",
     close: {
       type: "plain_text",
       text: "Cancel",
-      emoji: true,
     },
     blocks: [
       {
@@ -25,7 +22,7 @@ function ideaAuthorModal() {
         text: {
           type: "mrkdwn",
           text:
-            "Если у вас есть идея и команда или есть идея но нет команды, то зарегистрируйте на хакатон себя, (свою команду) и идею для участия.",
+            "Register your idea so that you can receive matching candidates matching skills you are looking for",
         },
       },
       {
@@ -41,8 +38,7 @@ function ideaAuthorModal() {
         },
         label: {
           type: "plain_text",
-          text: "Название команды",
-          emoji: true,
+          text: "Idea / team name",
         },
       },
 
@@ -53,11 +49,14 @@ function ideaAuthorModal() {
           type: "plain_text_input",
           multiline: true,
           action_id: "plain_text_input-action",
+          placeholder: {
+            type: "plain_text",
+            text: "What problem are you solving?",
+          },
         },
         label: {
           type: "plain_text",
           text: "Describe your idea",
-          emoji: true,
         },
       },
 
@@ -68,14 +67,12 @@ function ideaAuthorModal() {
           type: "multi_static_select",
           placeholder: {
             type: "plain_text",
-            text: "Select skills you are looking for",
-            emoji: true,
+            text: "Developer, designer, javascript, etc.",
           },
           options: SKILLS.map((skill) => ({
             text: {
               type: "plain_text",
               text: skill.title,
-              emoji: true,
             },
             value: skill.id,
           })),
@@ -84,10 +81,18 @@ function ideaAuthorModal() {
         label: {
           type: "plain_text",
           text: "Skills you are looking for",
-          emoji: true,
         },
       },
-
+      {
+        type: "context",
+        elements: [
+          {
+            type: "plain_text",
+            text:
+              "We'll we posting you solo participants profiles with matching skills",
+          },
+        ],
+      },
       {
         type: "input",
         block_id: "phoneOrTelegramUsername",
@@ -98,7 +103,6 @@ function ideaAuthorModal() {
         label: {
           type: "plain_text",
           text: "Phone or Telegram Username",
-          emoji: true,
         },
       },
     ],

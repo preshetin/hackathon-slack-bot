@@ -6,18 +6,15 @@ function soloParticipantModal() {
     title: {
       type: "plain_text",
       text: "Solo Participant",
-      emoji: true,
     },
     submit: {
       type: "plain_text",
-      text: "Отправить",
-      emoji: true,
+      text: "Register",
     },
     type: "modal",
     close: {
       type: "plain_text",
-      text: "Отмена",
-      emoji: true,
+      text: "Cancel",
     },
     blocks: [
       {
@@ -25,7 +22,7 @@ function soloParticipantModal() {
         text: {
           type: "mrkdwn",
           text:
-            "Если у вас нет идеи и команды, то зарегистрируйтесь на хакатон как соло-участник, мы поможем вам найти команду.",
+            "Register as solo participant to receive ideas matching your skills",
         },
       },
       {
@@ -38,11 +35,15 @@ function soloParticipantModal() {
           type: "plain_text_input",
           multiline: true,
           action_id: "plain_text_input-action",
+          placeholder: {
+            type: "plain_text",
+            text:
+              "Be specific about skills you have, share what you've done and what you're looking for",
+          },
         },
         label: {
           type: "plain_text",
-          text: "Какая у вас экспертиза и опыт",
-          emoji: true,
+          text: "Your experience and expertise",
         },
       },
       {
@@ -53,13 +54,11 @@ function soloParticipantModal() {
           placeholder: {
             type: "plain_text",
             text: "Choose your skills",
-            emoji: true,
           },
           options: SKILLS.map((skill) => ({
             text: {
               type: "plain_text",
               text: skill.title,
-              emoji: true,
             },
             value: skill.id,
           })),
@@ -68,8 +67,16 @@ function soloParticipantModal() {
         label: {
           type: "plain_text",
           text: "Your skills",
-          emoji: true,
         },
+      },
+      {
+        type: "context",
+        elements: [
+          {
+            type: "plain_text",
+            text: "We'll be posting you idea proposals matching your skills",
+          },
+        ],
       },
       {
         type: "input",
@@ -80,8 +87,7 @@ function soloParticipantModal() {
         },
         label: {
           type: "plain_text",
-          text: "Телефон / телеграм",
-          emoji: true,
+          text: "Phone or Telegram",
         },
       },
     ],
