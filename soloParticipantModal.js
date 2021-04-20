@@ -78,18 +78,6 @@ function soloParticipantModal() {
           },
         ],
       },
-      {
-        type: "input",
-        block_id: "phoneOrTelegramUsername",
-        element: {
-          type: "plain_text_input",
-          action_id: "plain_text_input-action",
-        },
-        label: {
-          type: "plain_text",
-          text: "Phone or Telegram",
-        },
-      },
     ],
   };
 }

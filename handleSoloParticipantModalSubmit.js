@@ -15,8 +15,6 @@ async function handleSoloParticipantModalSubmit({ client, body, ack }) {
     const createData = {
       skills,
       experience: values.experience["plain_text_input-action"].value,
-      phoneOrTelegramUsername:
-        values.phoneOrTelegramUsername["plain_text_input-action"].value,
     };
 
     await soloParticipatsCreate(slackUid, createData);

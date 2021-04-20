@@ -19,8 +19,6 @@ async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
       skills,
       teamName: values.teamName["plain_text_input-action"].value,
       ideaDescription: values.ideaDescription["plain_text_input-action"].value,
-      phoneOrTelegramUsername:
-        values.phoneOrTelegramUsername["plain_text_input-action"].value,
     };
 
     const res = await ideaAuthorsCreate(slackUid, createData);
