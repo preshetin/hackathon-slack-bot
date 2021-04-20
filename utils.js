@@ -119,6 +119,7 @@ const matchingParticipants = ({
       (participant) =>
         participant.matchedSkills.length > 0 &&
         participant.role === lookingFor &&
+        participant.allowPostingNewMatches &&
         excludeSlackUid !== participant.slackUid
     );
 };
