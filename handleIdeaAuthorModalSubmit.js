@@ -2,6 +2,8 @@ const ideaAuthorsCreate = require("./idea-authors/create").main;
 const sendMessageWithMatchingSoloParticipants = require("./sendMessageWithMatchingSoloParticipants");
 const notifySoloParticipantsLookingForMatchedSkills = require("./notifySoloParticipantsLookingForMatchedSkills");
 const sendMessageToMatchingChannel = require("./sendMessageToMatchingChannel");
+const getPostToMatchinChannelFromValues = require('./utils').getPostToMatchinChannelFromValues;
+const getNewMatchesFromValues = require('./utils').getNewMatchesFromValues;
 
 async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
   await ack();
@@ -20,7 +22,7 @@ async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
       allowPostingNewMatches: getNewMatchesFromValues(values),
     };
 
-    const res = await ideaAuthorsCreate(slackUid, createData);
+    await ideaAuthorsCreate(slackUid, createData);
 
     await sendMessageWithMatchingSoloParticipants({ client, slackUid, skills });
 
@@ -30,44 +32,17 @@ async function handleIdeaAuthorModalSubmit({ client, body, ack }) {
       newParticipant,
     });
 
-    await sendMessageToMatchingChannel({
-      client,
-      type: "idea-author",
-      newParticipant,
-    });
+    if (createData.postToMatchingChannel) {
+      await sendMessageToMatchingChannel({
+        client,
+        type: "idea-author",
+        newParticipant,
+      });
+    }
   } catch (error) {
     console.error("ERROR:", error);
   }
 }
 
-const getPostToMatchinChannelFromValues = (values) => {
-  if (
-    values &&
-    values.notifications &&
-    values.notifications.notificationCheckboxes &&
-    values.notifications.notificationCheckboxes.selected_options &&
-    values.notifications.notificationCheckboxes.selected_options.some(
-      (el) => el.value === "postToMatchingChannel"
-    )
-  ) {
-    return true;
-  }
-  return false;
-};
-
-const getNewMatchesFromValues = (values) => {
-  if (
-    values &&
-    values.notifications &&
-    values.notifications.notificationCheckboxes &&
-    values.notifications.notificationCheckboxes.selected_options &&
-    values.notifications.notificationCheckboxes.selected_options.some(
-      (el) => el.value === "allowPostingNewMatches"
-    )
-  ) {
-    return true;
-  }
-  return false;
-};
 
 module.exports = handleIdeaAuthorModalSubmit;

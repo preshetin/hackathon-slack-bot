@@ -123,7 +123,39 @@ const matchingParticipants = ({
     );
 };
 
+const getPostToMatchinChannelFromValues = (values) => {
+  if (
+    values &&
+    values.notifications &&
+    values.notifications.notificationCheckboxes &&
+    values.notifications.notificationCheckboxes.selected_options &&
+    values.notifications.notificationCheckboxes.selected_options.some(
+      (el) => el.value === "postToMatchingChannel"
+    )
+  ) {
+    return true;
+  }
+  return false;
+};
+
+const getNewMatchesFromValues = (values) => {
+  if (
+    values &&
+    values.notifications &&
+    values.notifications.notificationCheckboxes &&
+    values.notifications.notificationCheckboxes.selected_options &&
+    values.notifications.notificationCheckboxes.selected_options.some(
+      (el) => el.value === "allowPostingNewMatches"
+    )
+  ) {
+    return true;
+  }
+  return false;
+};
+
 module.exports = {
   SKILLS,
   matchingParticipants,
+  getPostToMatchinChannelFromValues,
+  getNewMatchesFromValues
 };
