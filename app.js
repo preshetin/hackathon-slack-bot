@@ -32,7 +32,7 @@ app.event("team_join", async ({ event, client }) => {
       ...messageOnTeamJoin({ slackUid }),
     });
 
-    mixpanel.people_set(slackUid, {
+    mixpanel.people.set(slackUid, {
       $name: event.user.name,
       real_name: event.user.real_name,
       $avatar: event.user.profile.image_192,
