@@ -48,7 +48,7 @@ const buildNewSoloText = ({ newParticipant }) => {
     .map((skill) => SKILLS.find((s) => s.id === skill))
     .map((s) => "`" + s.title + "`")
     .join(", ");
-  let result = `Hey, idea authors! New solo participant :alien: <@${newParticipant.slackUid}> is looking for a team / idea. That folk's got following skills: ${skillsList}. Here's more details: \`\`\`${newParticipant.experience}\`\`\`\n`;
+  let result = `New solo participant :alien: <@${newParticipant.slackUid}> is looking for a team / idea. That folk's got following skills: ${skillsList}. Here's more details: \`\`\`${newParticipant.experience}\`\`\`\n`;
   result += `In case you're interested feel free to reach out to <@${newParticipant.slackUid}>`;
   return result;
 };
@@ -58,7 +58,7 @@ const buildNewIdeaText = ({ newParticipant }) => {
     .map((skill) => SKILLS.find((s) => s.id === skill))
     .map((s) => "`" + s.title + "`")
     .join(", ");
-  let result = `Hey, solo participants! New idea :bulb: named *${newParticipant.teamName}* was just posted by <@${newParticipant.slackUid}>. To make this idea come true, the author is looking for the following skills: ${skillsList}. Here's more details: \`\`\`${newParticipant.ideaDescription}\`\`\`\n`;
+  let result = `New idea :bulb: named *${newParticipant.teamName}* was just posted by <@${newParticipant.slackUid}>. To make this idea come true, the author is looking for the following skills: ${skillsList}. Here's more details: \`\`\`${newParticipant.ideaDescription}\`\`\`\n`;
   result += `In case you're interested feel free to reach out to <@${newParticipant.slackUid}>`;
   return result;
 };
