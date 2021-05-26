@@ -34,8 +34,14 @@ functions:
   # created for testing locally
   participantsCreate:
     handler: participants/create.main
-  participantsScan:
-    handler: db/scan.main
+
+  # Planning to use it for web dashboard prototype
+  getScan:
+    handler: db/scan.handler
+    events:
+      - http:
+          path: scan
+          method: get
 
   slack:
     handler: app.handler
