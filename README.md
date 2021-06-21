@@ -1,3 +1,12 @@
+# How to install an this Slack app
+
+1. Deploy this app with any ENV vars by running command like `sls deploy --stage prod-hackathon-id -v`
+2. Create and app, copy app manifest, then instert Slack URL.
+3. Add logo.
+4. Install the app.
+5. Decide which channel are you planning to use as #matching channel. Copy that channel ID.
+6. Now you have all Env vars for Deploy script. Fill them and re-deploy the app.
+
 # Deploying to AWS Lambda ⚡️ Bolt for JavaScript
 
 > Slack app example for deploying to AWS Lambda using the Serverless Framework with Bolt for JavaScript
