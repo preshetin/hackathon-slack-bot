@@ -1,5 +1,5 @@
 function messageOnTeamJoin({ slackUid }) {
-  const text = `:wave: Welcome <@${slackUid}> to *WFAanywhere Hackathon*! Please choose below :point_down: how are you planning to participate. Or even choose both!`;
+  const text = `:wave: Welcome <@${slackUid}> to *${process.env.HACKATHON_NAME}* hackathon! Please choose below :point_down: how are you planning to participate. Or even choose both!`;
 
   return {
     text,
