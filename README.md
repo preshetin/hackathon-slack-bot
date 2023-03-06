@@ -1,3 +1,8 @@
+# Slack bot for hackathons
+
+![slack-app-hackathon-bot](https://user-images.githubusercontent.com/4620130/223089785-34598149-a9c5-45bc-99ab-8bf64ec54893.gif)
+
+
 # How to install an this Slack app
 
 1. Deploy this app with any ENV vars by running command like `sls deploy --stage prod-hackathon-id -v`
